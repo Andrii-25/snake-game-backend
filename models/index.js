@@ -2,6 +2,7 @@ const env = process.env.NODE_ENV || "development";
 const Sequelize = require("sequelize");
 const User = require("./user");
 const Score = require("./score");
+const Token = require("./token");
 const config = require("../config/config")[env];
 
 const db = {};
@@ -20,6 +21,7 @@ if (config.use_env_variable) {
 
 db.User = User(sequelize, Sequelize.DataTypes);
 db.Score = Score(sequelize, Sequelize.DataTypes);
+db.Token = Token(sequelize, Sequelize.DataTypes);
 
 Object.keys(db).forEach((modelName) => {
   if (db[modelName].associate) {
