@@ -16,13 +16,18 @@ class ScoreService {
     return score;
   }
 
-  async updateScoreByUser(user) {
-    const score = await Score.update({ user });
+  async updateScoreByUser(user, score) {
+    const score = await Score.update({ score }, { where: { user } });
     return score;
   }
 
   async removeScoreByUser(user) {
     const score = await Score.destroy({ user });
+    return score;
+  }
+
+  async removeScoreById(id) {
+    const score = await Score.destroy({ id });
     return score;
   }
 }
