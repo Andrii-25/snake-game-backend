@@ -1,6 +1,7 @@
 const { User } = require("../models");
 const bcrypt = require("bcrypt");
 const tokenService = require("./token-service");
+const scoreService = require("./score-service");
 const UserDto = require("../dto/user-dto");
 const ApiError = require("../exceptions/api-error");
 
@@ -18,6 +19,7 @@ class UserService {
     const userDto = new UserDto(user);
     const tokens = tokenService.generateTokens({ ...userDto });
     await tokenService.saveToken(userDto.id, tokens.refreshToken);
+    await scoreService.createNewScore({ score: 0, user: userDto.id });
 
     return {
       ...tokens,
