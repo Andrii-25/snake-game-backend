@@ -1,4 +1,4 @@
-import scoreService from "../service/score-service";
+const scoreService = require("../service/score-service");
 
 class ScoreController {
   async createNew(req, res, next) {

@@ -7,9 +7,9 @@ const ApiError = require("../exceptions/api-error");
 
 class UserService {
   async registration(username, password) {
-    const candidate = await User.findOne({ username });
+    const candidate = await User.findOne({ where: { username } });
     if (candidate) {
-      throw ApiError.BadRequest(`There is no user with name ${username}!`);
+      throw ApiError.BadRequest(`There is already user with name ${username}!`);
     }
     const hashPassword = await bcrypt.hash(password, 3);
     const user = await User.create({
@@ -28,7 +28,7 @@ class UserService {
   }
 
   async login(username, password) {
-    const user = await User.findOne({ username });
+    const user = await User.findOne({ where: { username } });
     if (!user) {
       throw ApiError.BadRequest(`There is no user with name ${username}!`);
     }
@@ -53,11 +53,11 @@ class UserService {
       throw ApiError.UnauthorizedError();
     }
     const userData = tokenService.validateRefreshToken(refreshToken);
-    // const tokenFromDb = await tokenService.findToken(refreshToken);
-    if (!userData) {
+    const tokenFromDb = await tokenService.findToken(refreshToken);
+    if (!userData || !tokenFromDb) {
       throw ApiError.UnauthorizedError();
     }
-    const user = await User.findOne({ id: userData.id });
+    const user = await User.findOne({ where: { id: userData.id } });
     const userDto = new UserDto(user);
     const tokens = tokenService.generateTokens({ ...userDto });
     await tokenService.saveToken(userDto.id, tokens.refreshToken);
@@ -66,7 +66,11 @@ class UserService {
 
   async getAllUsers() {
     const users = await User.findAll();
-    return users;
+    const usersToReturn = [];
+    for (let user of users) {
+      usersToReturn.push(new UserDto(user));
+    }
+    return usersToReturn;
   }
 }
 

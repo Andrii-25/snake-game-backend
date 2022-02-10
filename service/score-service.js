@@ -2,8 +2,8 @@ const { Score } = require("../models");
 
 class ScoreService {
   async createNewScore(score) {
-    const score = await Score.create(score);
-    return score;
+    const createdScore = await Score.create(score);
+    return createdScore;
   }
 
   async getAllScores() {
@@ -12,22 +12,22 @@ class ScoreService {
   }
 
   async getScoreByUser(user) {
-    const score = await Score.findOne({ user });
+    const score = await Score.findOne({ where: { user } });
     return score;
   }
 
   async updateScoreByUser(user, score) {
-    const score = await Score.update({ score }, { where: { user } });
-    return score;
+    const updatedScore = await Score.update({ score }, { where: { user } });
+    return updatedScore;
   }
 
   async removeScoreByUser(user) {
-    const score = await Score.destroy({ user });
+    const score = await Score.destroy({ where: { user } });
     return score;
   }
 
   async removeScoreById(id) {
-    const score = await Score.destroy({ id });
+    const score = await Score.destroy({ where: { id } });
     return score;
   }
 }
