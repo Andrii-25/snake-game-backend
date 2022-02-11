@@ -18,8 +18,8 @@ router.get("/users", authMiddleware, userController.getUsers);
 
 router.post("/score", scoreController.createNew);
 router.get("/score/all", scoreController.getAll);
-router.get("/score", scoreController.getByUser);
-router.put("/score", scoreController.updateByUser);
+router.get("/score/:userId", scoreController.getByUser);
+router.put("/score/:userId", scoreController.updateByUser);
 router.delete("/score/remove-id", scoreController.removeById);
 router.delete("/score/remove-user", scoreController.removeByUser);
 

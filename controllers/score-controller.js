@@ -22,8 +22,8 @@ class ScoreController {
 
   async getByUser(req, res, next) {
     try {
-      const { user } = req.body;
-      const score = await scoreService.getScoreByUser(user);
+      const { userId } = req.params;
+      const score = await scoreService.getScoreByUser(userId);
       return res.json(score);
     } catch (e) {
       next(e);
@@ -32,8 +32,9 @@ class ScoreController {
 
   async updateByUser(req, res, next) {
     try {
-      const { user, score } = req.body;
-      const updatedScore = await scoreService.updateScoreByUser(user, score);
+      const { userId } = req.params;
+      const { score } = req.body;
+      const updatedScore = await scoreService.updateScoreByUser(userId, score);
       return res.json(updatedScore);
     } catch (e) {
       next(e);

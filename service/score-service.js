@@ -11,18 +11,21 @@ class ScoreService {
     return scores;
   }
 
-  async getScoreByUser(user) {
-    const score = await Score.findOne({ where: { user } });
+  async getScoreByUser(userId) {
+    const score = await Score.findOne({ where: { user: userId } });
     return score;
   }
 
-  async updateScoreByUser(user, score) {
-    const updatedScore = await Score.update({ score }, { where: { user } });
+  async updateScoreByUser(userId, score) {
+    const updatedScore = await Score.update(
+      { score },
+      { where: { user: userId } }
+    );
     return updatedScore;
   }
 
-  async removeScoreByUser(user) {
-    const score = await Score.destroy({ where: { user } });
+  async removeScoreByUser(userId) {
+    const score = await Score.destroy({ where: { user: userId } });
     return score;
   }
 
