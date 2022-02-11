@@ -17,10 +17,7 @@ class ScoreService {
   }
 
   async updateScoreByUser(userId, score) {
-    const updatedScore = await Score.update(
-      { score },
-      { where: { user: userId } }
-    );
+    const updatedScore = await Score.update(score, { where: { user: userId } });
     return updatedScore;
   }
 

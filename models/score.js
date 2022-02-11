@@ -12,6 +12,8 @@ module.exports = (sequelize, DataTypes) => {
   Score.init(
     {
       score: DataTypes.NUMBER,
+      snakeSpeed: { type: DataTypes.DOUBLE, defaultValue: 1.0 },
+      snakeLength: { type: DataTypes.INTEGER, defaultValue: 2 },
       user: {
         type: DataTypes.INTEGER,
         references: {
