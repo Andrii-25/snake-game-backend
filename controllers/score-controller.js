@@ -23,7 +23,7 @@ class ScoreController {
   async getByUser(req, res, next) {
     try {
       const { userId } = req.params;
-      const score = await scoreService.getScoreByUser(userId);
+      const score = await scoreService.getScoreByUser(parseInt(userId));
       return res.json(score);
     } catch (e) {
       next(e);
@@ -41,19 +41,9 @@ class ScoreController {
     }
   }
 
-  async removeByUser(req, res, next) {
-    try {
-      const { user } = req.body;
-      const removedScore = await scoreService.removeScoreByUser(user);
-      return res.json(removedScore);
-    } catch (e) {
-      next(e);
-    }
-  }
-
   async removeById(req, res, next) {
     try {
-      const { id } = req.body;
+      const { id } = req.params;
       const removedScore = await scoreService.removeScoreById(id);
       return res.json(removedScore);
     } catch (e) {

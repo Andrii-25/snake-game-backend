@@ -21,11 +21,6 @@ class ScoreService {
     return updatedScore;
   }
 
-  async removeScoreByUser(userId) {
-    const score = await Score.destroy({ where: { user: userId } });
-    return score;
-  }
-
   async removeScoreById(id) {
     const score = await Score.destroy({ where: { id } });
     return score;
